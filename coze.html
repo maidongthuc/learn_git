@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Cơ Bản</title>
+    <style>
+        .chat-container {
+            width: 300px;
+            height: 400px;
+            border: 1px solid #ccc;
+            margin: 20px auto;
+            overflow-y: scroll;
+        }
+        .message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #f5f5f5;
+            text-align: left;
+        }
+        .input-area {
+            width: 300px;
+            margin: 0 auto;
+            display: flex;
+        }
+        .input-area input {
+            flex-grow: 1;
+            padding: 5px;
+        }
+        .input-area button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chatbox">
+        <div class="message bot-message">Xin chào! Tôi là chatbot của bạn.</div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Nhập tin nhắn...">
+        <button onclick="sendMessage()">Gửi</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value;
+            if (message.trim() === "") return;
+
+            const chatbox = document.getElementById("chatbox");
+            const userMsg = document.createElement("div");
+            userMsg.className = "message user-message";
+            userMsg.textContent = message;
+            chatbox.appendChild(userMsg);
+
+            // Giả lập phản hồi của bot
+            const botMsg = document.createElement("div");
+            botMsg.className = "message bot-message";
+            botMsg.textContent = "Tôi đã nhận được tin nhắn: " + message;
+            chatbox.appendChild(botMsg);
+
+            input.value = "";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    </script>
+</body>
+</html>

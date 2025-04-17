@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Health Monitor</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 80%;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f0f0f0;
+            }
+            .container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .value-box {
+                margin: 10px 0;
+                padding: 10px;
+                background-color: #f8f9fa;
+                border-radius: 3px;
+            }
+            .predict_content {
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Health Monitor Dashboard</h1>
+            <div class="value-box">
+                <strong>Temperature:</strong> <span id="temp">0</span> °C
+            </div>
+            <div class="value-box">
+                <strong>SpO2:</strong> <span id="spo2">0</span> %
+            </div>
+            <div class="value-box">
+                <strong>Heart Rate:</strong> <span id="hr">0</span> bpm
+            </div>
+            <div class="value-box">
+                <strong>Systolic BP:</strong> <span id="sys">0</span> mmHg
+            </div>
+            <div class="value-box">
+                <strong>Diastolic BP:</strong> <span id="dia">0</span> mmHg
+            </div>
+            <div class="predict_content">
+                <h2>Dự đoán:</h2>
+                <div id="prediction">Đang dự đoán...</div>
+                <h2>Phân tích và giải pháp:</h2>
+                <div id="analysis">Đang phân tích...</div>
+            </div>
+        </div>
+
+        <script>
+            const ws = new WebSocket("ws://localhost:8000/ws");
+            ws.onerror = function(event) {
+                console.error("WebSocket Error:", event);
+            };
+
+            ws.onopen = function() {
+                console.log("✅ WebSocket connected!");
+            };
+
+            ws.onclose = function() {
+                console.warn("⚠️ WebSocket connection closed");
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                console.log(data)
+                document.getElementById("temp").innerText = data.temp;
+                document.getElementById("spo2").innerText = data.spo2;
+                document.getElementById("hr").innerText = data.hr;
+                document.getElementById("sys").innerText = data.sys;
+                document.getElementById("dia").innerText = data.dia;
+                document.getElementById("prediction").innerText = data.prediction || "Đang dự đoán...";
+                document.getElementById("analysis").innerText = data.analysis || "Đang phân tích...";
+            };
+
+            ws.onclose = function() {
+                console.log("WebSocket connection closed");
+            };
+        </script>
+    </body>
+</html>
