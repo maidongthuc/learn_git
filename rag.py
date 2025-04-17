@@ -1,8 +1,3 @@
-"""
-This example is about how to use the streaming interface to start a chat request
-and handle chat events
-"""
-
 import os
 # Our official coze sdk for Python [cozepy](https://github.com/coze-dev/coze-py)
 from cozepy import COZE_COM_BASE_URL
