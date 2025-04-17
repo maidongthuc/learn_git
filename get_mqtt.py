@@ -62,6 +62,7 @@ client.username_pw_set(mqtt_username, mqtt_password)  # Đăng nhập
 client.tls_set()  # Kích hoạt TLS
 
 # Gán callback
+#quan lý kết nối và nhận tin nhắn
 client.on_connect = on_connect
 client.on_message = on_message
 
